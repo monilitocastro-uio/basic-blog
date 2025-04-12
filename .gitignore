@@ -120,4 +120,5 @@ yarn-error.log
 # Azure
 ecf/
 rcf/
-# Removed appsettings.json from gitignore to allow tracking
+
+appsettings.json
