@@ -91,6 +91,7 @@ ScaffoldingReadMe.txt
 
 # ASP.NET Core
 appsettings.Development.json
+appsettings.Production.json
 *.Development.json
 wwwroot/lib/
 
@@ -119,3 +120,4 @@ yarn-error.log
 # Azure
 ecf/
 rcf/
+# Removed appsettings.json from gitignore to allow tracking
