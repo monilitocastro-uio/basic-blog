@@ -122,3 +122,4 @@ ecf/
 rcf/
 
 appsettings.json
+.env
