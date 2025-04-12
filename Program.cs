@@ -1,4 +1,10 @@
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using MoniliToDapper.Repositories;
+using Npgsql;
+using System.Data;
 using monilitodapper.Authentication;
 using monilitodapper.Services;
 
@@ -7,6 +13,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddSingleton<BlogConfig>();
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
 
 // Configure authentication
 builder.Services.AddAuthentication("BasicAuthentication")
@@ -14,6 +22,13 @@ builder.Services.AddAuthentication("BasicAuthentication")
 
 // Add authorization services
 builder.Services.AddAuthorization();
+
+// Configure database connection
+builder.Services.AddScoped<IDbConnection>(sp => 
+    new NpgsqlConnection(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// Register repositories
+builder.Services.AddScoped<IArticleRepository, ArticleRepository>();
 
 var app = builder.Build();
 
@@ -35,5 +50,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();
+app.MapControllers();
 
 app.Run();
